@@ -35,9 +35,9 @@ export function Restaurants() {
 
 
     function ImgMediaCard() {
-        const clothesList = category.map((item, index) => {
+        return category.map((item, index) => {
             return (
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} key={index}>
                     <CardMedia
                         component="img"
                         alt="green iguana"
@@ -59,17 +59,15 @@ export function Restaurants() {
                     </CardActions>
                 </Card>
             );
-            return <div className="card-container">{clothesList}</div>;
         });
+    }
 
-    };
-
-  return (
-    <>
-      <div>
-        <Navbar />
-        <ImgMediaCard />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div>
+                <Navbar />
+                {ImgMediaCard()}
+            </div>
+        </>
+    );
 }
