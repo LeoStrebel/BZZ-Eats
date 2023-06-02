@@ -18,15 +18,17 @@ public class RestaurantController {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @PostMapping("/order")
+    @PostMapping("/restaurants")
     @ResponseStatus(HttpStatus.CREATED)
     public RestaurantModel create(@RequestBody RestaurantModel restaurant) {
         return restaurantRepository.save(restaurant);
     }
 
-    @GetMapping("/getOrders")
+    @GetMapping("/getRestaurants")
     public List<RestaurantModel> getRestaurants(){
-        return restaurantRepository.findAll();
+        List<RestaurantModel> restaurants = restaurantRepository.findAll();
+        System.out.println(restaurants.get(1).getId());
+        return restaurants;
     }
 
 }
