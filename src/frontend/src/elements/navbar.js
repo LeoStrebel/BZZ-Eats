@@ -105,30 +105,6 @@ export default function Navbar() {
                 <ListItemText primary="Home" />
               </ListItem>
             </Link>
-            <Link to="/clothing">
-              <ListItem button>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Cloting" />
-              </ListItem>
-            </Link>
-            <Link to="/contact">
-              <ListItem button>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Contact" />
-              </ListItem>
-            </Link>
-            <Link to="/contactTable">
-              <ListItem button>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Contact Table" />
-              </ListItem>
-            </Link>
           </List>
         </Box>
       </Drawer>
