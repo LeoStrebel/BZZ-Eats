@@ -1,16 +1,15 @@
 import React from 'react'
 import Navbar from '../elements/navbar';
 
-function Home() {
+function Essen() {
     return (
         <>
             <div>
                 <Navbar />
-                <h1>Products</h1>
             </div>
 
         </>
     )
 };
 
-export default Home;
+export default Essen;

@@ -1,17 +1,15 @@
 import React from 'react'
 import Navbar from '../elements/navbar';
-import Restaurant from '../elements/restaurant';
 
-function Home() {
+function Abschluss() {
     return (
         <>
             <div>
                 <Navbar />
-                <Restaurant />
             </div>
 
         </>
     )
 };
 
-export default Home;
+export default Abschluss;
