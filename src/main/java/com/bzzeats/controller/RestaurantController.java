@@ -27,7 +27,6 @@ public class RestaurantController {
     @GetMapping("/getRestaurants")
     public List<RestaurantModel> getRestaurants(){
         List<RestaurantModel> restaurants = restaurantRepository.findAll();
-        System.out.println(restaurants.get(1).getId());
         return restaurants;
     }
 
