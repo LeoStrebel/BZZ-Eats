@@ -6,6 +6,7 @@ import Essen from "./pages/essen";
 import Support from "./pages/support";
 import Warenkorb from "./pages/warenkorb";
 import Abschluss from "./pages/abschluss";
+import {Restaurants} from "./pages/restaurants";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/support" element={<Support />} />
           <Route path="/warenkorb" element={<Warenkorb />} />
           <Route path="/abschluss" element={<Abschluss />} />
+            <Route path="/restaurants" element={<Restaurants />} />
         </Routes>
       </Router>
     </div>
