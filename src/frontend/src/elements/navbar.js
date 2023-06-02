@@ -14,7 +14,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 const pages = [
-  { name: "Home", path: "/" },
+  { name: "Home", path: "/restaurants" },
   { name: "Essen", path: "/essen" },
   { name: "Support", path: "/support" },
   { name: "Abschluss", path: "/abschluss" },
