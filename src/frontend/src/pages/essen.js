@@ -1,15 +1,63 @@
-import React from "react";
-import Navbar from "../elements/navbar";
+import React, { useEffect, useRef, useState } from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
 
-function Essen() {
+const Essen = () => {
+  let currentURL = useRef("");
+  const [menus, setMenus] = useState([]);
+
+  useEffect(() => {
+    currentURL.current = window.location.pathname.split("/").pop();
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/getMenus`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMenus(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching category:", error);
+      });
+  }, []);
+
+  function CreateMenus() {
+    return menus.map((item, index) => {
+      if (item.restaurantid === Number(currentURL.current)) {
+        return (
+          <Card sx={{ maxWidth: 345 }} key={index}>
+            <CardMedia
+              component="img"
+              alt="green iguana"
+              height="140"
+              image="/static/images/cards/contemplative-reptile.jpg"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {item.menuname}
+              </Typography>
+            </CardContent>
+          </Card>
+        );
+      }
+    });
+  }
+
   return (
     <>
-      <div>
-        <Navbar />
-        <h1>Essen</h1>
-      </div>
+      <div>{CreateMenus()}</div>
     </>
   );
-}
+};
 
 export default Essen;

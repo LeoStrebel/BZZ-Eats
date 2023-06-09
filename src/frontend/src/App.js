@@ -33,19 +33,29 @@ const App = () => {
 
   const setRoutes = () =>
     restaurants.map((category, index) => {
-      return <Route path={`/restaurants/${category.id}`} element={<Essen />} />;
+      return (
+        <Route
+          key={category.id}
+          path={`/restaurants/${category.id}`}
+          element={<Essen />}
+        />
+      );
     });
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/essen" element={<Essen />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/warenkorb" element={<Warenkorb />} />
-          <Route path="/abschluss" element={<Abschluss />} />
-          <Route path="/restaurants" element={<Restaurants />} />
+          <Route key="main" path="/" element={<Home />} />
+          <Route key="essen" path="/essen" element={<Essen />} />
+          <Route key="support" path="/support" element={<Support />} />
+          <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
+          <Route key="abschluss" path="/abschluss" element={<Abschluss />} />
+          <Route
+            key="restaurants"
+            path="/restaurants"
+            element={<Restaurants />}
+          />
           {setRoutes()}
         </Routes>
       </Router>
