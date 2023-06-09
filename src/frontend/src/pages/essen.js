@@ -35,19 +35,21 @@ const Essen = () => {
     return menus.map((item, index) => {
       if (item.restaurantid === Number(currentURL.current)) {
         return (
-          <Card sx={{ maxWidth: 345 }} key={index}>
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {item.menuname}
-              </Typography>
-            </CardContent>
-          </Card>
+          <div className="col-sm-6 col-md-4 col-xl-3">
+            <Card sx={{ maxWidth: 345 }} key={index}>
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="140"
+                image="/static/images/cards/contemplative-reptile.jpg"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {item.menuname}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         );
       }
     });
@@ -55,7 +57,9 @@ const Essen = () => {
 
   return (
     <>
-      <div>{CreateMenus()}</div>
+      <div className="container">
+        <div className="row">{CreateMenus()}</div>
+      </div>
     </>
   );
 };
