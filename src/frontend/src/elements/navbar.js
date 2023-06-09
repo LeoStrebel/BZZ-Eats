@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { useSelector } from 'react-redux'
 
 const pages = [
   { name: "Home", path: "/restaurants" },
@@ -21,8 +22,9 @@ const pages = [
 ];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const cart = useSelector((state) => state.cart.cart)
 
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -132,6 +134,7 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
               <IconButton sx={{ p: 0 }}>
+                {cart.length === 0 ? '' : cart.length}
                 <ShoppingCartOutlinedIcon />
               </IconButton>
           </Box>
