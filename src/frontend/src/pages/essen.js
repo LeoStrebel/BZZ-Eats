@@ -3,6 +3,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
+import "../css/essen.css";
+import Button from "@mui/material/Button";
 
 const Essen = () => {
   let currentURL = useRef("");
@@ -35,21 +37,20 @@ const Essen = () => {
     return menus.map((item, index) => {
       if (item.restaurantid === Number(currentURL.current)) {
         return (
-          <div className="col-sm-6 col-md-4 col-xl-3">
-            <Card sx={{ maxWidth: 345 }} key={index}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {item.menuname}
-                </Typography>
-              </CardContent>
-            </Card>
-          </div>
+          <Card sx={{ maxWidth: 345 }} key={index} className="card">
+            <CardContent className="card-content">
+              <Typography gutterBottom variant="h5" component="div">
+                {item.menuname}
+              </Typography>
+              <Typography gutterBottom component="div">
+                {item.menudescription}
+              </Typography>
+              <Typography gutterBottom component="div">
+                {item.price} CHF
+              </Typography>
+              <Button variant="outlined">In den Warenkorb</Button>
+            </CardContent>
+          </Card>
         );
       }
     });

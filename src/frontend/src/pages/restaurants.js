@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import "../css/restaurant.css";
 
 export function Restaurants() {
   const [category, setCategory] = useState([]);
@@ -35,14 +36,14 @@ export function Restaurants() {
   function ImgMediaCard() {
     return category.map((item, index) => {
       return (
-        <div className="col-sm-6 col-md-4 col-xl-3">
+        <div className="col-sm-6 col-md-4 col-xl-3 mt-5" key={item.id}>
           <Link to={`/restaurants/${item.id}`} key={index}>
-            <Card sx={{ maxWidth: 345 }} key={index}>
+            <Card sx={{ maxWidth: 345 }} className="card">
               <CardMedia
                 component="img"
-                alt="green iguana"
+                alt="No Image"
                 height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
+                image={`../img/${item.id}.png`}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
