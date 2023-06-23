@@ -5,10 +5,16 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import "../css/essen.css";
 import Button from "@mui/material/Button";
+import { useSelector, useDispatch  } from 'react-redux'
+import { addItem } from '../store/cartSlice'
+
 
 const Essen = () => {
   let currentURL = useRef("");
   const [menus, setMenus] = useState([]);
+
+  const cart = useSelector((state) => state.cart.cart)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     currentURL.current = window.location.pathname.split("/").pop();
@@ -33,6 +39,10 @@ const Essen = () => {
       });
   }, []);
 
+  function addToCart(index) {
+    dispatch(addItem(menus.find(item => item.id == index)))
+  }
+
   function CreateMenus() {
     return menus.map((item, index) => {
       if (item.restaurantid === Number(currentURL.current)) {
@@ -48,7 +58,8 @@ const Essen = () => {
               <Typography gutterBottom component="div">
                 {item.price} CHF
               </Typography>
-              <Button variant="outlined">In den Warenkorb</Button>
+              {Number(item.id)}
+              <Button variant="outlined" onClick={() => addToCart(Number(item.id))}>In den Warenkorb</Button>
             </CardContent>
           </Card>
         );

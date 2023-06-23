@@ -21,6 +21,11 @@ const pages = [
   { name: "Abschluss", path: "/abschluss" },
 ];
 
+const cartPage = {
+  name: "Warenkorb",
+  path: "/warenkorb"
+}
+
 function ResponsiveAppBar() {
   const cart = useSelector((state) => state.cart.cart)
 
@@ -133,10 +138,18 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-              <IconButton sx={{ p: 0 }}>
+            <Button
+              key={cartPage.name}
+              component={Link}
+              onClick={handleCloseNavMenu}
+              to={cartPage.path}>
+
+
+              <IconButton sx={{ p: 0 }} >
                 {cart.length === 0 ? '' : cart.length}
                 <ShoppingCartOutlinedIcon />
               </IconButton>
+            </Button>
           </Box>
         </Toolbar>
       </Container>
