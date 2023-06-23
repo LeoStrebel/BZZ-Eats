@@ -51,8 +51,12 @@ const App = () => {
           <Route key="support" path="/support" element={<Support />} />
           <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           <Route key="abschluss" path="/abschluss" element={<Abschluss />} />
-          <Route key="restaurants" path="/restaurants" element={<Restaurants />}/>
-          <Route key="warenkorb" path="/warenkorb" element={<Warenkorb/>}/>
+          <Route
+            key="restaurants"
+            path="/restaurants"
+            element={<Restaurants />}
+          />
+          <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           {setRoutes()}
         </Routes>
       </Router>

@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
+import Navbar from "../elements/navbar";
 import "../css/essen.css";
 import Button from "@mui/material/Button";
 
@@ -48,7 +49,9 @@ const Essen = () => {
               <Typography gutterBottom component="div">
                 {item.price} CHF
               </Typography>
-              <Button variant="outlined">In den Warenkorb</Button>
+              <div className="button-container">
+                <Button variant="outlined">Zum Warenkorb hinzufügen</Button>
+              </div>
             </CardContent>
           </Card>
         );
@@ -58,8 +61,14 @@ const Essen = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="row">{CreateMenus()}</div>
+      <Navbar />
+      <div className="container" style={{ display: "flex", flexWrap: "wrap" }}>
+        <div
+          className="row"
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          {CreateMenus()}
+        </div>
       </div>
     </>
   );
