@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import Navbar from "../elements/navbar";
 import "../css/restaurant.css";
 
 export function Restaurants() {
@@ -67,6 +68,7 @@ export function Restaurants() {
 
   return (
     <>
+      <Navbar />
       <div className="container">
         <div className="row">{ImgMediaCard()}</div>
       </div>

@@ -1,12 +1,18 @@
-.card{
-    width: 100%;
-    height: 100%;
-    margin: 20px;
-}
-
-.card-content {
+.card {
+  width: 100%;
+  height: 35vh !important;
+  margin: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  margin-top: auto;
 }
