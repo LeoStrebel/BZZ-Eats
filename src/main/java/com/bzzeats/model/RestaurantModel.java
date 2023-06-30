@@ -10,7 +10,7 @@ public class RestaurantModel {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "restaurantname")
     private String name;
 
     @Column(name = "score")
