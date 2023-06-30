@@ -138,7 +138,6 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-<<<<<<< HEAD
             <Button
               key={cartPage.name}
               component={Link}
@@ -151,12 +150,6 @@ function ResponsiveAppBar() {
                 <ShoppingCartOutlinedIcon />
               </IconButton>
             </Button>
-=======
-            <IconButton sx={{ p: 0 }}>
-              {cart.length === 0 ? "" : cart.length}
-              <ShoppingCartOutlinedIcon />
-            </IconButton>
->>>>>>> b2b4aee5be299835f3a4c86cdbe9c43d4112aa67
           </Box>
         </Toolbar>
       </Container>

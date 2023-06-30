@@ -8,6 +8,8 @@ import Support from "./pages/support";
 import Warenkorb from "./pages/warenkorb";
 import Abschluss from "./pages/abschluss";
 import { Restaurants } from "./pages/restaurants";
+import Success from "./pages/success";
+import Cancel from "./pages/cancel";
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -49,13 +51,11 @@ const App = () => {
           <Route key="main" path="/" element={<Home />} />
           <Route key="essen" path="/essen" element={<Essen />} />
           <Route key="support" path="/support" element={<Support />} />
+          <Route key="success" path="/success" element={<Success />} />
+          <Route key="cancel" path="/cancel" element={<Cancel />} />
           <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           <Route key="abschluss" path="/abschluss" element={<Abschluss />} />
-          <Route
-            key="restaurants"
-            path="/restaurants"
-            element={<Restaurants />}
-          />
+          <Route key="restaurants" path="/restaurants" element={<Restaurants />}/>
           <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           {setRoutes()}
         </Routes>
