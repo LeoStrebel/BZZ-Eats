@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Navbar from "../elements/navbar";
+import Rating from "@mui/material/Rating";
 import "../css/restaurant.css";
+import image from "../img/1.png";
 
 export function Restaurants() {
   const [category, setCategory] = useState([]);
@@ -44,18 +46,25 @@ export function Restaurants() {
                 component="img"
                 alt="No Image"
                 height="140"
-                image={`../img/${item.id}.png`}
+                image={image}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  id="restaurantName"
+                >
                   {item.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
+                  {item.category}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <Rating name="read-only" value={item.score} readOnly />
                 </Typography>
               </CardContent>
-              <CardActions>
+              <CardActions className="cardActions">
                 <Button size="small">Share</Button>
                 <Button size="small">Learn More</Button>
               </CardActions>
