@@ -19,7 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Build with Maven
+      - name: Build frontend
+        run: |
+          cd src/frontend
+          npm install
+          npm run build
+          cd ../..
+
+      - name: Build backend with Maven
         run: mvn clean package
 
       - name: Upload artifact for deployment job
@@ -27,6 +34,12 @@ jobs:
         with:
           name: java-app
           path: 'target/*.jar'
+      
+      - name: Upload artifact for frontend
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend-app
+          path: 'src/frontend/build'
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,6 +54,12 @@ jobs:
         with:
           name: java-app
 
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-app
+          path: 'frontend'
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -49,3 +68,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: '*.jar'
+          custom-id: 'frontend'
+          custom-folder: 'frontend'
