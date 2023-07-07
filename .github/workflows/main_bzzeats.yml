@@ -23,17 +23,11 @@ jobs:
         run: |
           cd src/frontend
           npm install
-          CI=false npm run build --no-warnings
+          CI=false npm run build --no-warnings --output-path ../main/resources/static
           cd ../..
 
       - name: Build backend with Maven
         run: mvn clean package
-
-      - name: Upload artifact for frontend
-        uses: actions/upload-artifact@v2
-        with:
-          name: frontend-app
-          path: 'src/frontend/build'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -54,18 +48,9 @@ jobs:
         with:
           name: java-app
 
-      - name: Download frontend artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: frontend-app
-          path: 'frontend'
-
       - name: Deploy to Azure Web App
         run: |
-          cd ${{ github.workspace }}/frontend
-          zip -r ../frontend.zip .
-          az webapp deployment source config-zip --src ../frontend.zip --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          az webapp deploy --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --src java-app/*.jar
         env:
-          frontend-app: frontend
           AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
