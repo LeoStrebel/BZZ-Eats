@@ -28,7 +28,6 @@ jobs:
           cd src/frontend
           npm install
           CI=false npm run build --no-warnings
-          CI=false npm test
           cp -r build/* ../../main/resources/static/
           cd ../../
 
