@@ -34,12 +34,6 @@ jobs:
         with:
           name: java-app
           path: 'target/*.jar'
-      
-      - name: Upload artifact for frontend
-        uses: actions/upload-artifact@v2
-        with:
-          name: frontend-app
-          path: 'src/frontend/build'
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,12 +55,10 @@ jobs:
           path: 'frontend'
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '*.jar'
-          custom-id: 'frontend'
-          custom-folder: 'frontend'
+        run: |
+          az webapp deployment source config-zip --src $(frontend-app) --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+        env:
+          frontend-app: frontend
+          AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
