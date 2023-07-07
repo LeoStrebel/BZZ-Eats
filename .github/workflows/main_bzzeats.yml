@@ -1,59 +1,43 @@
-name: Build and deploy JAR app to Azure WebApp - bzzeats
+name: Build and Deploy to Azure Web App
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Java version
+      - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
 
-      - name: Build frontend
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Build and Test React App
         run: |
           cd src/frontend
           npm install
-          CI=false npm run build --no-warnings --output-path ../main/resources/static
-          cd ../..
+          npm run build
+          npm test
+          cp -r build/* ../../main/resources/static/
+          cd ../../
 
-      - name: Build backend with Maven
+      - name: Build with Maven
         run: mvn clean package
 
-      - name: Create ZIP for deployment
-        run: |
-          cd target
-          zip -r java-app.zip *.jar
-          cd ..
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
         with:
-          name: java-app
-          path: 'target/java-app.zip'
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: java-app
-
-      - name: Deploy to Azure WebApp
-        run: |
-          az webapp deployment source config-zip --resource-group dauti --name bzzeats --src java-app/java-app.zip
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: target
