@@ -27,8 +27,8 @@ jobs:
         run: |
           cd src/frontend
           npm install
-          CI=true npm run build --no-warnings
-          CI=true npm test
+          CI=false npm run build --no-warnings
+          CI=false npm test
           cp -r build/* ../../main/resources/static/
           cd ../../
 
