@@ -62,8 +62,9 @@ jobs:
 
       - name: Deploy to Azure Web App
         run: |
-          az webapp deployment source config-zip --src $(frontend-app) --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
-          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          cd ${{ github.workspace }}/frontend
+          zip -r ../frontend.zip .
+          az webapp deployment source config-zip --src ../frontend.zip --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
         env:
           frontend-app: frontend
           AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
