@@ -29,11 +29,17 @@ jobs:
       - name: Build backend with Maven
         run: mvn clean package
 
+      - name: Create ZIP for deployment
+        run: |
+          cd target
+          zip -r java-app.zip *.jar
+          cd ..
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: 'target/*.jar'
+          path: 'target/java-app.zip'
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,7 +56,7 @@ jobs:
 
       - name: Deploy to Azure Web App
         run: |
-          az webapp deploy --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --src java-app/*.jar
+          az webapp deployment source config-zip --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --src java-app/java-app.zip
         env:
           AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
