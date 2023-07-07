@@ -23,7 +23,7 @@ jobs:
         run: |
           cd src/frontend
           npm install
-          CI=true npm run build
+          CI=true npm run build --no-warnings
           cd ../..
 
       - name: Build backend with Maven
