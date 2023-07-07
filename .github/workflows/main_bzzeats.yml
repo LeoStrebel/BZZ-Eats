@@ -1,4 +1,4 @@
-name: Build and deploy JAR app to Azure Web App - bzzeats
+name: Build and deploy JAR app to Azure WebApp - bzzeats
 
 on:
   push:
@@ -54,9 +54,6 @@ jobs:
         with:
           name: java-app
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure WebApp
         run: |
-          az webapp deployment source config-zip --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --src java-app/java-app.zip
-        env:
-          AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          az webapp deployment source config-zip --resource-group dauti --name bzzeats --src java-app/java-app.zip
