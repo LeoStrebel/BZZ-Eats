@@ -13,9 +13,10 @@ import Cancel from "./pages/cancel";
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/getRestaurants`, {
+    fetch(`${backendUrl}/api/getRestaurants`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

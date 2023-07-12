@@ -1,11 +1,11 @@
 package com.bzzeats.controller;
 
 import com.bzzeats.model.CheckoutItem;
-import com.bzzeats.model.EssenModel;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,10 +21,13 @@ public class StripeController {
         Stripe.apiKey = "sk_test_51NObT1AVbesgGByCjs193kA8ZHK761DZpv1Y42yAhe3LhtsrsiM8A0tXXQtkfen4TzStCntZyTelZLGxsh7hrFyT00UHf3cvWa"; // Replace with your secret key
     }
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @PostMapping("/create-checkout-session")
     public Map<String, String> createCheckoutSession(@RequestBody CheckoutItem[] items) throws StripeException {
         List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
-        String baseUrl = "http://localhost:3000";
+        String baseUrl = frontendUrl;
 
         for (CheckoutItem item : items) {
             lineItems.add(

@@ -16,13 +16,14 @@ const Essen = () => {
 
   const cart = useSelector((state) => state.cart.cart)
   const dispatch = useDispatch()
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     currentURL.current = window.location.pathname.split("/").pop();
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/getMenus`, {
+    fetch(`${backendUrl}/api/getMenus`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
