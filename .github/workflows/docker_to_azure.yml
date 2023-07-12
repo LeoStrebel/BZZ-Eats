@@ -1,0 +1,72 @@
+name: Azure Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: bzzeatscontainers.azurecr.io
+  FRONTEND_IMAGE: frontend-app
+  BACKEND_IMAGE: backend-app
+  RESOURCE_GROUP: dauti
+  WEBAPP_NAME_FRONTEND: bzzeats-frontend
+  WEBAPP_NAME_BACKEND: bzzeats-backend
+  AZURE_SP_USERNAME: ${{ secrets.AZURE_SP_USERNAME }}
+  AZURE_SP_PASSWORD: ${{ secrets.AZURE_SP_PASSWORD }}
+  AZURE_SP_TENANT: ${{ secrets.AZURE_SP_TENANT }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build and push frontend Docker image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          docker build -f frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }} frontend/
+          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
+
+      - name: Build and push backend Docker image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          docker build -f backend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} backend/
+          docker push ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+
+      - name: Deploy frontend to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.WEBAPP_NAME_FRONTEND }}
+          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
+
+      - name: Deploy backend to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.WEBAPP_NAME_BACKEND }}
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
