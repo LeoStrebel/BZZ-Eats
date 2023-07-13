@@ -47,6 +47,7 @@ const App = () => {
 
   return (
     <div className="App">
+      {backendUrl}
       <Router>
         <Routes>
           <Route key="main" path="/" element={<Home />} />
