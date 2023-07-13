@@ -6,12 +6,12 @@ on:
       - main
 
 env:
-  REGISTRY: your_acr_login_server.azurecr.io
-  FRONTEND_IMAGE: frontend-image
-  BACKEND_IMAGE: backend-image
-  RESOURCE_GROUP: your_resource_group
-  WEBAPP_NAME_FRONTEND: your-webapp-frontend
-  WEBAPP_NAME_BACKEND: your-webapp-backend
+  REGISTRY: bzzeatscontainers.azurecr.io
+  FRONTEND_IMAGE: frontend-app
+  BACKEND_IMAGE: backend-app
+  RESOURCE_GROUP: dauti
+  WEBAPP_NAME_FRONTEND: bzzeats-frontend
+  WEBAPP_NAME_BACKEND: bzzeats-backend
   AZURE_SP_USERNAME: ${{ secrets.AZURE_SP_USERNAME }}
   AZURE_SP_PASSWORD: ${{ secrets.AZURE_SP_PASSWORD }}
   AZURE_SP_TENANT: ${{ secrets.AZURE_SP_TENANT }}
@@ -24,10 +24,20 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Set up Azure CLI
+        uses: azure/setup-azure-cli@v1
+
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Docker login for frontend image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and push frontend Docker image
         env:
@@ -49,8 +59,8 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME_FRONTEND }}
           images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
           resource-group: ${{ env.RESOURCE_GROUP }}
-          username: ${{ env.AZURE_SP_USERNAME }}
-          password: ${{ env.AZURE_SP_PASSWORD }}
+          username: ${{ secrets.AZURE_APP_USERNAME }}
+          password: ${{ secrets.AZURE_APP_PASSWORD }}
 
       - name: Deploy backend to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -58,5 +68,5 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME_BACKEND }}
           images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
           resource-group: ${{ env.RESOURCE_GROUP }}
-          username: ${{ env.AZURE_SP_USERNAME }}
-          password: ${{ env.AZURE_SP_PASSWORD }}
+          username: ${{ secrets.AZURE_APP_USERNAME }}
+          password: ${{ secrets.AZURE_APP_PASSWORD }}
