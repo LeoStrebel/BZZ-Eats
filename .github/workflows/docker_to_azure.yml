@@ -29,6 +29,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Replace profile in application.properties
+        run: sed -i 's|spring.profiles.active=dev|spring.profiles.active=prod|' application.properties
+
       - name: Docker login for frontend image
         uses: azure/docker-login@v1
         with:
@@ -40,6 +43,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
+          sed -i 's|REACT_APP_BACKEND_URL=.*|REACT_APP_BACKEND_URL=https://${{ env.WEBAPP_NAME_BACKEND }}.azurewebsites.net|' src/frontend/.env.development
           docker build --no-cache -f src/frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest src/frontend/
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
 
