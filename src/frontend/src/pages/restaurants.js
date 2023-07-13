@@ -15,7 +15,7 @@ import image from "../img/1.png";
 
 export function Restaurants() {
   const [category, setCategory] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
 
   useEffect(() => {
     fetch(`${backendUrl}/api/getRestaurants`, {

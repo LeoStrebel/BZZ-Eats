@@ -32,11 +32,6 @@ jobs:
       - name: Replace profile in application.properties
         run: sed -i 's|spring.profiles.active=dev|spring.profiles.active=prod|' src/backend/main/resources/application.properties
 
-      - name: Replace URLs in .env.development
-        run: |
-          sed -i 's|REACT_APP_BACKEND_URL=http://localhost:8080|REACT_APP_BACKEND_URL=https://bzzeats-backend.azurewebsites.net/|' src/frontend/.env.development
-          sed -i 's|FRONTEND_URL=http://localhost:3000|FRONTEND_URL=https://bzzeats-frontend.azurewebsites.net/|' src/frontend/.env.development
-
       - name: Docker login for frontend image
         uses: azure/docker-login@v1
         with:

@@ -15,6 +15,7 @@ import Shop2Icon from '@mui/icons-material/Shop2';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe('pk_test_51NObT1AVbesgGByCLurlCoUpCjuj1vN4EtTiyYmAx6GEY0Jj3mKN7IHWi940h4qu9y6GMVtIie0NjDZtBe8TBszW00iOgJbwWU');  // Replace 'pk_test_...' with your actual publishable key
+const backendUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
 
 const Warenkorb = () => {
     const cart = useSelector((state) => state.cart.cart)
@@ -47,7 +48,7 @@ const Warenkorb = () => {
         console.log(JSON.stringify(checkoutItems))
 
     
-        const response = await fetch('http://localhost:8080/api/create-checkout-session', {
+        const response = await fetch(`${backendUrl}/api/create-checkout-session`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

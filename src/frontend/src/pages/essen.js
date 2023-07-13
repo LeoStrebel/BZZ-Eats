@@ -16,7 +16,7 @@ const Essen = () => {
 
   const cart = useSelector((state) => state.cart.cart)
   const dispatch = useDispatch()
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
 
   useEffect(() => {
     currentURL.current = window.location.pathname.split("/").pop();
