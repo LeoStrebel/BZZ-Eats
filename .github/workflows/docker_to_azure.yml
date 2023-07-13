@@ -30,7 +30,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Replace profile in application.properties
-        run: sed -i 's|spring.profiles.active=dev|spring.profiles.active=prod|' application.properties
+        run: sed -i 's|spring.profiles.active=dev|spring.profiles.active=prod|' src/backend/main/resources/application.properties
 
       - name: Docker login for frontend image
         uses: azure/docker-login@v1
