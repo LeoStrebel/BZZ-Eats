@@ -7,8 +7,8 @@ on:
 
 env:
   REGISTRY: bzzeatscontainers.azurecr.io
-  FRONTEND_IMAGE: frontend-app
-  BACKEND_IMAGE: backend-app
+  FRONTEND_IMAGE: eatsfrontend
+  BACKEND_IMAGE: eatsbackend
   RESOURCE_GROUP: dauti
   WEBAPP_NAME_FRONTEND: bzzeats-frontend
   WEBAPP_NAME_BACKEND: bzzeats-backend
@@ -40,14 +40,14 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          docker build -f src/frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }} src/frontend/
+          docker build --no-cache -f src/frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }} src/frontend/
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
       - name: Build and push backend Docker image
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          docker build -f Dockerfile -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} .
+          docker build --no-cache -f Dockerfile -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} .
           docker push ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
 
       - name: Deploy frontend to Azure Web App
