@@ -6,12 +6,15 @@ on:
       - main
 
 env:
-  REGISTRY: bzzeatscontainers.azurecr.io
-  FRONTEND_IMAGE: frontend-app
-  BACKEND_IMAGE: backend-app
-  RESOURCE_GROUP: dauti
-  WEBAPP_NAME_FRONTEND: bzzeats-frontend
-  WEBAPP_NAME_BACKEND: bzzeats-backend
+  REGISTRY: your_acr_login_server.azurecr.io
+  FRONTEND_IMAGE: frontend-image
+  BACKEND_IMAGE: backend-image
+  RESOURCE_GROUP: your_resource_group
+  WEBAPP_NAME_FRONTEND: your-webapp-frontend
+  WEBAPP_NAME_BACKEND: your-webapp-backend
+  AZURE_SP_USERNAME: ${{ secrets.AZURE_SP_USERNAME }}
+  AZURE_SP_PASSWORD: ${{ secrets.AZURE_SP_PASSWORD }}
+  AZURE_SP_TENANT: ${{ secrets.AZURE_SP_TENANT }}
 
 jobs:
   build-and-deploy:
@@ -27,6 +30,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push frontend Docker image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
         env:
           DOCKER_BUILDKIT: 1
         run: |
@@ -34,6 +42,11 @@ jobs:
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
       - name: Build and push backend Docker image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ env.AZURE_SP_USERNAME }}
+          password: ${{ env.AZURE_SP_PASSWORD }}
         env:
           DOCKER_BUILDKIT: 1
         run: |
