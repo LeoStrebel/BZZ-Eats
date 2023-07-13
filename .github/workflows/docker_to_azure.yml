@@ -30,11 +30,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push frontend Docker image
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.REGISTRY }}
-          username: ${{ env.AZURE_SP_USERNAME }}
-          password: ${{ env.AZURE_SP_PASSWORD }}
         env:
           DOCKER_BUILDKIT: 1
         run: |
@@ -42,11 +37,6 @@ jobs:
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
       - name: Build and push backend Docker image
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.REGISTRY }}
-          username: ${{ env.AZURE_SP_USERNAME }}
-          password: ${{ env.AZURE_SP_PASSWORD }}
         env:
           DOCKER_BUILDKIT: 1
         run: |
