@@ -15,7 +15,7 @@ env:
   AZURE_SP_USERNAME: ${{ secrets.AZURE_SP_USERNAME }}
   AZURE_SP_PASSWORD: ${{ secrets.AZURE_SP_PASSWORD }}
   AZURE_SP_TENANT: ${{ secrets.AZURE_SP_TENANT }}
-
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
