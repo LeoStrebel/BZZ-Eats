@@ -54,7 +54,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.WEBAPP_NAME_FRONTEND }}
-          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
+          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
           resource-group: ${{ env.RESOURCE_GROUP }}
           username: ${{ secrets.AZURE_APP_USERNAME }}
           password: ${{ secrets.AZURE_APP_PASSWORD }}
@@ -63,7 +63,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.WEBAPP_NAME_BACKEND }}
-          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
           resource-group: ${{ env.RESOURCE_GROUP }}
           username: ${{ secrets.AZURE_APP_USERNAME }}
           password: ${{ secrets.AZURE_APP_PASSWORD }}
