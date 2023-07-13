@@ -40,14 +40,14 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          docker build -f frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }} frontend/
+          docker build -f src/frontend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }} src/frontend/
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
       - name: Build and push backend Docker image
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          docker build -f backend/Dockerfile -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} backend/
+          docker build -f Dockerfile -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} .
           docker push ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
 
       - name: Deploy frontend to Azure Web App
