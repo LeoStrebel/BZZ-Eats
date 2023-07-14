@@ -47,17 +47,15 @@ const App = () => {
 
   return (
     <div className="App">
-      a {process.env.REACT_APP_DEV_BACKEND_URL}
       <Router>
         <Routes>
-          <Route key="main" path="/" element={<Home />} />
           <Route key="essen" path="/essen" element={<Essen />} />
           <Route key="support" path="/support" element={<Support />} />
           <Route key="success" path="/success" element={<Success />} />
           <Route key="cancel" path="/cancel" element={<Cancel />} />
           <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           <Route key="abschluss" path="/abschluss" element={<Abschluss />} />
-          <Route key="restaurants" path="/restaurants" element={<Restaurants />}/>
+          <Route key="restaurants" path="/" element={<Restaurants />}/>
           <Route key="warenkorb" path="/warenkorb" element={<Warenkorb />} />
           {setRoutes()}
         </Routes>

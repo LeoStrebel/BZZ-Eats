@@ -6,23 +6,29 @@ import CardMedia from "@mui/material/CardMedia";
 import Navbar from "../elements/navbar";
 import "../css/essen.css";
 import Button from "@mui/material/Button";
-import { useSelector, useDispatch  } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { addItem } from '../store/cartSlice'
-
+import Loader from "../elements/loader";
+import { useSnackbar } from 'notistack';
+import { useCallback, Fragment } from 'react';
 
 const Essen = () => {
+  
   let currentURL = useRef("");
   const [menus, setMenus] = useState([]);
-
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const cart = useSelector((state) => state.cart.cart)
   const dispatch = useDispatch()
-  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
+  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   useEffect(() => {
     currentURL.current = window.location.pathname.split("/").pop();
   }, []);
 
   useEffect(() => {
+    setLoading(true)
     fetch(`${backendUrl}/api/getMenus`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -31,6 +37,7 @@ const Essen = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        setLoading(false)
         return response.json();
       })
       .then((data) => {
@@ -42,6 +49,7 @@ const Essen = () => {
   }, []);
 
   function addToCart(index) {
+    enqueueSnackbar("Essen wurde dem Warenkorb hinzugefügt", { autoHideDuration: 2500, variant: "success"});
     dispatch(addItem(menus.find(item => item.id == index)))
   }
 
@@ -70,9 +78,18 @@ const Essen = () => {
     });
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccess(false);
+  };
+
   return (
     <>
       <Navbar />
+      <Loader loading={loading}></Loader>
       <div className="container" style={{ display: "flex", flexWrap: "wrap" }}>
         <div
           className="row"

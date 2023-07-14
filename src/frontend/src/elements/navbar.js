@@ -13,13 +13,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useSelector } from "react-redux";
+import SVG from '../img/burger.svg';
 
-const pages = [
-  { name: "Home", path: "/restaurants" },
-  { name: "Essen", path: "/essen" },
-  { name: "Support", path: "/support" },
-  { name: "Abschluss", path: "/abschluss" },
-];
+const pages = [];
 
 const cartPage = {
   name: "Warenkorb",
@@ -43,7 +39,8 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+                  <img src={SVG} alt="SVG 1" component={Link} width={"50px"} sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+/>
           <Typography
             variant="h6"
             noWrap
@@ -51,6 +48,7 @@ function ResponsiveAppBar() {
             to="/"
             sx={{
               mr: 2,
+              ml: "10px",
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
@@ -59,7 +57,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            BZZ EATS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -143,10 +141,14 @@ function ResponsiveAppBar() {
               component={Link}
               onClick={handleCloseNavMenu}
               to={cartPage.path}
+              sx={{ my: 2, color: "white", display: "block" }}
+
             >
-              <IconButton sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0, color: "white" }}>
                 {cart.length === 0 ? "" : cart.length}
-                <ShoppingCartOutlinedIcon />
+                <ShoppingCartOutlinedIcon
+                  sx={{ my: 2, color: "white", display: "block" }}
+                />
               </IconButton>
             </Button>
           </Box>

@@ -36,3 +36,75 @@
     transform: rotate(360deg);
   }
 }
+
+.warenkorb-button {
+  color: white !important;
+  background-color: black !important;
+  border-radius: 5px !important;
+}
+
+
+.warenkorb-button:hover {
+  color: white !important;
+  background-color: #282c34 !important;
+  border-radius: 5px !important;
+}
+
+
+.burger {
+  animation: bounce 2s ease 0s 1 normal forwards !important;
+}
+
+.bag {
+  animation: bounce 3s cubic-bezier(0.11, 0, 0.5, 0) 0.1s 1 normal forwards !important;
+}
+
+.coffee {
+  animation: bounce 2s cubic-bezier(0.11, 0, 0.5, 0) 0.15s 1 normal forwards !important;
+}
+
+@keyframes bounce {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 1;
+		transform: translateY(-45px);
+	}
+
+	24% {
+		opacity: 1;
+	}
+
+	40% {
+		animation-timing-function: ease-in;
+		transform: translateY(-24px);
+	}
+
+	65% {
+		animation-timing-function: ease-in;
+		transform: translateY(-12px);
+	}
+
+	82% {
+		animation-timing-function: ease-in;
+		transform: translateY(-6px);
+	}
+
+	93% {
+		animation-timing-function: ease-in;
+		transform: translateY(-4px);
+	}
+
+	25%,
+	55%,
+	75%,
+	87% {
+		animation-timing-function: ease-out;
+		transform: translateY(0px);
+	}
+
+	100% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}

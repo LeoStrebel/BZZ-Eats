@@ -12,12 +12,15 @@ import Navbar from "../elements/navbar";
 import Rating from "@mui/material/Rating";
 import "../css/restaurant.css";
 import image from "../img/1.png";
+import Loader from "../elements/loader";
 
 export function Restaurants() {
+  const [loading, setLoading] = React.useState(false);
   const [category, setCategory] = useState([]);
-  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
+  const backendUrl = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${backendUrl}/api/getRestaurants`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -26,6 +29,7 @@ export function Restaurants() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        setLoading(false)
         return response.json();
       })
       .then((data) => {
@@ -79,8 +83,11 @@ export function Restaurants() {
   return (
     <>
       <Navbar />
+      <Loader loading={loading}></Loader>
       <div className="container">
-        <div className="row">{ImgMediaCard()}</div>
+        <div className="row">
+          {ImgMediaCard()}
+        </div>
       </div>
     </>
   );
