@@ -48,8 +48,8 @@ public class StripeController {
         SessionCreateParams params = SessionCreateParams.builder()
                 .addAllLineItem(lineItems)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl(baseUrl + "/success?session_id={CHECKOUT_SESSION_ID}")
-                .setCancelUrl(baseUrl + "/cancel")
+                .setSuccessUrl(baseUrl + "success?session_id={CHECKOUT_SESSION_ID}")
+                .setCancelUrl(baseUrl + "cancel")
                 .setShippingAddressCollection(SessionCreateParams.ShippingAddressCollection.builder().addAllowedCountry(SessionCreateParams.ShippingAddressCollection.AllowedCountry.CH).build())
                 .build();
 
